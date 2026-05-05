@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  ds-free-api:
+    image: ghcr.io/niyueee/ds-free-api:latest
+    container_name: ds-free-api
+    ports:
+      - "8080:8080"
+    environment:
+      - LISTEN_ADDR=0.0.0.0:8080
+      - USER_TOKENS=your_token_here
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/v1/models"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
